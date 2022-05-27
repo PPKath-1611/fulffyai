@@ -1,193 +1,262 @@
 #include<stdio.h>
-#define Machine 1
-#define User 2
-#define SIDE 3 // Length of the board
-// Computer will move with 'O'
-// and user with 'X'
-#define MACHINEMOVE 'O'
-#define USERMOVE 'X'
-// A function to show the current board status
-void showBoard(char board[][SIDE])
+#include<stdlib.h>
+#include<conio.h>
+
+char board[5][5] = {0};
+int arr[]={1,2,3,4,5,6,7,8,9};
+int mag[]={8,3,4,1,5,9,6,7,2};
+int arr2[9]={-1};
+int pla[5],comp[5];
+int m;
+
+int check()
 {
-printf("\n\n");
-printf("\t\t\t %c | %c | %c \n", board[0][0],
-
-board[0][1], board[0][2]);
-
-printf("\t\t\t--------------\n");
-printf("\t\t\t %c | %c | %c \n", board[1][0],
-
-board[1][1], board[1][2]);
-
-printf("\t\t\t--------------\n");
-printf("\t\t\t %c | %c | %c \n\n", board[2][0],
-
-board[2][1], board[2][2]);
-
-return;
-}
-// A function to show the instructions
-void showInstructions()
-{
-printf("\t\t\t Tic-Tac-Toe\n\n");
-printf("Choose a cell numbered from 1 to 9 as below"
-
-" and play\n\n");
-printf("\t\t\t 1 | 2 | 3 \n");
-printf("\t\t\t--------------\n");
-printf("\t\t\t 4 | 5 | 6 \n");
-printf("\t\t\t--------------\n");
-printf("\t\t\t 7 | 8 | 9 \n\n");
-
-printf("-\t-\t-\t-\t-\t-\t-\t-\t-\t-\n\n");
-return;
-}
-
-// A function to initialise the game
-void initialise(char board[][SIDE], int moves[])
-{
-// Initiate the random number generator so that
-// the same configuration doesn't arises
-srand(time(NULL));
-// Initially the board is empty
-for (int i=0; i<SIDE; i++)
-{
-for (int j=0; j<SIDE; j++)
-board[i][j] = ' ';
-
-}
-// Fill the moves with numbers
-for (int i=0; i<SIDE*SIDE; i++)
-moves[i] = i;
-// randomise the moves
-random_shuffle(moves, moves + SIDE*SIDE);
-return;
-}
-// A function to declare the winner of the game
-void declareWinner(int whoseTurn)
-{
-if (whoseTurn == COMPUTER)
-printf("Machine has won\n");
-else
-printf("User has won\n");
-return;
-}
-// A function that returns true if any of the row
-
-// is crossed with the same player's move
-bool rowCrossed(char board[][SIDE])
-{
-for (int i=0; i<SIDE; i++)
-{
-if (board[i][0] == board[i][1] &&
-board[i][1] == board[i][2] &&
-board[i][0] != ' ')
-return (true);
-
-}
-return(false);
-}
-// A function that returns true if any of the column
-// is crossed with the same player's move
-bool columnCrossed(char board[][SIDE])
-{
-for (int i=0; i<SIDE; i++)
-{
-if (board[0][i] == board[1][i] &&
-board[1][i] == board[2][i] &&
-board[0][i] != ' ')
-return (true);
-
-}
-return(false);
-}
-// A function that returns true if any of the diagonal
-// is crossed with the same player's move
-bool diagonalCrossed(char board[][SIDE])
-{
-if (board[0][0] == board[1][1] &&
-board[1][1] == board[2][2] &&
-board[0][0] != ' ')
-return(true);
-if (board[0][2] == board[1][1] &&
-board[1][1] == board[2][0] &&
-board[0][2] != ' ')
-return(true);
-return(false);
-
-}
-// A function that returns true if the game is over
-// else it returns a false
-bool gameOver(char board[][SIDE])
-{
-return(rowCrossed(board) || columnCrossed(board)
-
-|| diagonalCrossed(board) );
-
-}
-// A function to play Tic-Tac-Toe
-void playTicTacToe(int whoseTurn)
-{
-// A 3*3 Tic-Tac-Toe board for playing
-char board[SIDE][SIDE];
-int moves[SIDE*SIDE];
-// Initialise the game
-initialise(board, moves);
-// Show the instructions before playing
-showInstructions();
-int moveIndex = 0, x, y;
-// Keep playing till the game is over or it is a draw
-while (gameOver(board) == false &&
-moveIndex != SIDE*SIDE)
-
-{
-if (whoseTurn == COMPUTER)
-{
-x = moves[moveIndex] / SIDE;
-y = moves[moveIndex] % SIDE;
-board[x][y] = MACHINEMOVE;
-printf("Machine has put a %c in cell %d\n",
-MACHINEMOVE, moves[moveIndex]+1);
-
-showBoard(board);
-moveIndex ++;
-whoseTurn = USER;
+    int i=0;
+    while(i<9)
+    {
+        if(arr2[i] == 1 && arr2[i+1] == 1 && arr2[i+2] == 1)
+        {
+            printf("\n\n\t\t\t\t\tPlayer 1 WINS!!");
+            return 1;
+        }
+        if(arr2[i] == 2 && arr2[i+1] == 2 && arr2[i+2] == 2)
+        {
+            printf("\n\n\t\t\t\t\tCOMPUTER WINS!!");
+            return 1;
+        }
+        i = i+3;
+    }
+    i=0;
+    while(i<3)
+    {
+        if(arr2[i] == 1 && arr2[i+3] == 1 && arr2[i+6] == 1)
+        {
+            printf("\n\n\t\t\t\t\tPlayer 1 WINS!!");
+            return 1;
+        }
+        if(arr2[i] == 2 && arr2[i+3] == 2 && arr2[i+6] == 2)
+        {
+            printf("\n\n\t\t\t\t\tCOMPUTER WINS!!");
+            return 1;
+        }
+        i++;
+    }
+    i=0;
+    if(arr2[i] == 1 && arr2[i+4] == 1 && arr2[i+8] == 1)
+    {
+        printf("\n\n\t\t\t\t\tPlayer 1 WINS!!");
+        return 1;
+    }
+    if(arr2[i] == 2 && arr2[i+4] == 2 && arr2[i+8] == 2)
+    {
+        printf("\n\n\t\t\t\t\tCOMPUTER WINS!!");
+        return 1;
+    }
+    i=2;
+    if(arr2[i] == 1 && arr2[i+2] == 1 && arr2[i+4] == 1)
+    {
+        printf("\n\n\t\t\t\t\tPlayer 1 WINS!!");
+        return 1;
+    }
+    if(arr2[i] == 2 && arr2[i+2] == 2 && arr2[i+4] == 2)
+    {
+        printf("\n\n\t\t\t\t\tCOMPUTER WINS!!");
+        return 1;
+    }
+    return 0;
 }
 
-else if (whoseTurn == USER)
+void dis_board()
 {
-x = moves[moveIndex] / SIDE;
-y = moves[moveIndex] % SIDE;
-board[x][y] = USERMOVE;
-printf ("User has put a %c in cell %d\n",
-USERMOVE, moves[moveIndex]+1);
+    int i,j;
+    for(i=0;i<5;i++)
+    {
+        for(j=0;j<5;j++)
+        {
+            printf("\t%c",board[i][j]);
+        }
+        printf("\n");
+    }
+}
 
-showBoard(board);
-moveIndex ++;
-whoseTurn = COMPUTER;
-}
-}
-// If the game has drawn
-if (gameOver(board) == false &&
-moveIndex == SIDE * SIDE)
-printf("It's a draw\n");
-else
-{
-// Toggling the user to declare the actual
-// winner
-if (whoseTurn == COMPUTER)
-whoseTurn = USER;
-else if (whoseTurn == USER)
-whoseTurn = COMPUTER;
-// Declare the winner
-declareWinner(whoseTurn);
-}
-return;
-}
-// Driver program
 int main()
 {
-// Let us play the game with COMPUTER starting first
-playTicTacToe(COMPUTER);
-return (0);
+
+    printf("\t\t\t\t\t\t\tTIC TAC TOE!!\n\n\n\n");
+    int i,j,p,c=0,mc1=0,mc2=0,a;
+    int move=1;
+    printf("\n\n1. Player plays first\n2. Computer plays first\nYour Choice : ");
+    scanf("%d",&i);
+    if(i==1)
+        p=1;
+    else
+        p=2;
+    for(i=1;i<5;i++)
+    {
+        for(j=0;j<5;j++)
+            board[i][j] = '-';
+        i++;
+    }
+    for(j=1;j<5;j++)
+    {
+        for(i=0;i<5;i++)
+            board[i][j] = '|';
+        j++;
+    }
+    dis_board();
+    m=0;
+    while(m<9)
+    {
+        j=0;
+        printf("\n\nAvailable Moves : \n\n");
+        for(i=0;i<9;i++)
+        {
+            printf("\t%c",arr[i] + 48);
+            j++;
+            if(j==3)
+            {
+                printf("\n");
+                j=0;
+            }
+        }
+        if(p==1)
+        {
+            printf("\n\t\t\tPlayer 1(X) : \n\nChoose your move index : ");
+            scanf("%d",&move);
+            printf("\n\n");
+            arr[move-1] = -3;
+            arr2[move-1] = 1;
+            pla[mc2] = mag[move-1];
+            mc2++;
+            switch(move)
+            {
+                case 1:
+                    board[0][0] = 'X';
+                    break;
+                case 2:
+                    board[0][2] = 'X';
+                    break;
+                case 3:
+                    board[0][4] = 'X';
+                    break;
+                case 4:
+                    board[2][0] = 'X';
+                    break;
+                case 5:
+                    board[2][2] = 'X';
+                    break;
+                case 6:
+                    board[2][4] = 'X';
+                    break;
+                case 7:
+                    board[4][0] = 'X';
+                    break;
+                case 8:
+                    board[4][2] = 'X';
+                    break;
+                case 9:
+                    board[4][4] = 'X';
+                    break;
+            }
+            dis_board();
+            c = check();
+            if(c==1)
+                return 0;
+            p++;
+            m++;
+        }
+        else
+        {
+            printf("\n\t\t\tPlayer COMP(O) : \n\nChoose your move index : ");
+            if(mc1==0)
+            {
+                move = 5;
+                if(arr[move-1] == -3)
+                    goto jump2;
+            }
+            if(mc1==1)
+            {
+                jump2:
+                    move = 1;
+                    while(arr[move-1] == -3 && move<9)
+                        move = (move*2) + 1;
+            }
+            if(mc1>=2)
+            {
+                a = 15 - comp[mc1-1] - comp[mc1-2];
+                if(a<9)
+                {
+                    i=0;
+                    while(mag[i] != a)
+                        i++;
+                    move = i+1;
+                }
+                else
+                    goto jump1;
+                if(arr[move-1] == -3)
+                {
+                    a = 15 - pla[mc2-1] - pla[mc2-2];
+                    if(a<9)
+                    {
+                        i=0;
+                        while(mag[i] != a)
+                            i++;
+                        move = i+1;
+                    }
+                    else
+                        goto jump1;
+                }
+                jump1:
+                    if(arr[move-1] == -3 || move>=9)
+                    {
+                        while(arr[move-1] == -3)
+                            move = rand() %9 + 1;
+                    }
+            }
+            printf("%d\n\n",move);
+            arr[move-1] = -3;
+            arr2[move-1] = 2;
+            comp[mc1] = mag[move-1];
+            mc1++;
+            switch(move)
+            {
+                case 1:
+                    board[0][0] = 'O';
+                    break;
+                case 2:
+                    board[0][2] = 'O';
+                    break;
+                case 3:
+                    board[0][4] = 'O';
+                    break;
+                case 4:
+                    board[2][0] = 'O';
+                    break;
+                case 5:
+                    board[2][2] = 'O';
+                    break;
+                case 6:
+                    board[2][4] = 'O';
+                    break;
+                case 7:
+                    board[4][0] = 'O';
+                    break;
+                case 8:
+                    board[4][2] = 'O';
+                    break;
+                case 9:
+                    board[4][4] = 'O';
+                    break;
+            }
+            dis_board();
+            c = check();
+            if(c==1)
+                return 0;
+            p--;
+            m++;
+        }
+    }
+    if(m==9)
+        printf("\n\n\t\t\t\t\tTHAT'S A DRAW!!");
+    return 0;
 }
